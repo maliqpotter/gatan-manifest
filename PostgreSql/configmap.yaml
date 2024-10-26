@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-postgres-init
+data:
+  create-superuser.sql: |
+    CREATE ROLE superuser WITH LOGIN SUPERUSER PASSWORD 'supersecretpassword';

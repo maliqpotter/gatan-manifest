@@ -1,0 +1,18 @@
+# rabbitmq-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+spec:
+  type: NodePort
+  ports:
+    - name: amqp
+      port: 5672
+      targetPort: 5672
+      nodePort: 30672 # Change this node port as needed
+    - name: management
+      port: 15672
+      targetPort: 15672
+      nodePort: 30673 # Change this node port as needed
+  selector:
+    app: rabbitmq

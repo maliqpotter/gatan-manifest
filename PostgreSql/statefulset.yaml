@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-postgresql
+  labels:
+    app: postgresql
+spec:
+  serviceName: service-postgresql
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:16.4-bookworm
+        imagePullPolicy: Always
+        envFrom:
+        - secretRef:
+            name: my-postgresql-secrets
+        ports:
+        - containerPort: 5432
+          name: postgresdb
+        volumeMounts:
+        - name: pv-data
+          mountPath: /var/lib/postgresql/data
+          subPath: postgres
+      volumes:
+      - name: pv-data
+        persistentVolumeClaim:
+          claimName: my-postgre-pvc
