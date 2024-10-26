@@ -1,0 +1,19 @@
+services:
+    pritunl:
+        container_name: pritunl
+        image: ghcr.io/jippi/docker-pritunl
+        restart: always
+        privileged: true
+        dns:
+            - 1.1.1.1
+            - 8.8.8.8
+        ports:
+            - '8081:80'
+            - '446:443'
+            - '1194:1194'
+            - '1194:1194/udp'
+            - '16487:16487/udp'
+        volumes:
+            - './data/pritunl.conf:/etc/pritunl.conf'
+            - './data/pritunl:/var/lib/pritunl'
+            - './data/mongodb:/var/lib/mongodb'
